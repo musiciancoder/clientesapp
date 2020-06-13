@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Cliente} from './cliente';
-import {ClIENTES} from './clientes.json'; //EL ARRAY
+import {ClienteService} from './cliente.service';
 
 
 @Component({
@@ -11,12 +11,11 @@ import {ClIENTES} from './clientes.json'; //EL ARRAY
 export class ClientesComponent implements OnInit {
 
   clientes: Cliente[]; //El array que importamos lo definimos como atributo de clase
+  constructor(private clienteService: ClienteService){} //ver explicacion en Typescript.txt
 
-
-  constructor() { }
 
   ngOnInit(): void {
-    this.clientes = ClIENTES;//¿Por qué necesitaste decir que el array Cliente[] es parte de la clase con this.clientes = CLIENTES;? Acaso si no lo especificas en el método no lo reconoce al inicializar la app?
+    this.clientes = this.clienteService.getClientes();//¿Por qué necesitaste decir que el array Cliente[] es parte de la clase con this.clientes = CLIENTES;? Acaso si no lo especificas en el método no lo reconoce al inicializar la app?
   }
 
 }
