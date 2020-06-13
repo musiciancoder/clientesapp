@@ -10,7 +10,7 @@ import {ClienteService} from './clientes/cliente.service';
 
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent, //
     HeaderComponent,
     FooterComponent,
     DirectivaComponent,
