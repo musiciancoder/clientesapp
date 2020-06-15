@@ -1,6 +1,6 @@
 export class Cliente {
   id: number;
-  nombre: string;
+  nombre: string ="Andrés";
   apellido: string;
   createAt: string;
   email: string;

@@ -7,8 +7,8 @@ import {Cliente} from './cliente';
 })
 export class FormComponent implements OnInit {
 
-  private cliente:Cliente=new Cliente(); //a este atributo es donde se mapean los ngModel de los input
-  private titulo:string = " Crear cliente";
+  public cliente:Cliente=new Cliente(); //a este atributo es donde se mapean los ngModel de los input
+  public titulo:string = " Crear cliente";
 
   constructor() { }
 
