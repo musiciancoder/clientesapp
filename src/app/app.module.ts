@@ -9,7 +9,8 @@ import { ClientesComponent } from './clientes/clientes.component';
 import {ClienteService} from './clientes/cliente.service';
 import { RouterModule, Routes} from '@angular/router';
 import {HttpClientModule} from '@angular/common/http';
-
+import { FormComponent } from './clientes/form.component';
+import {FormsModule} from '@angular/forms';
 
 // ROUTING
 const  routes: Routes = [
@@ -25,11 +26,13 @@ const  routes: Routes = [
     HeaderComponent,
     FooterComponent,
     DirectivaComponent,
-    ClientesComponent
+    ClientesComponent,
+    FormComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule, //PARA CONECTAR CON EL BACKEND DE SPRING
+    FormsModule, // para trabajar con formularios
     RouterModule.forRoot(routes)  //ROUTING
   ],
   providers: [ClienteService], // CLASES SERVICIO
