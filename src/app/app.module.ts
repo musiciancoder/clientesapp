@@ -8,6 +8,8 @@ import { DirectivaComponent } from './directiva/directiva.component';
 import { ClientesComponent } from './clientes/clientes.component';
 import {ClienteService} from './clientes/cliente.service';
 import { RouterModule, Routes} from '@angular/router';
+import {HttpClientModule} from '@angular/common/http';
+
 
 // ROUTING
 const  routes: Routes = [
@@ -27,6 +29,7 @@ const  routes: Routes = [
   ],
   imports: [
     BrowserModule,
+    HttpClientModule, //PARA CONECTAR CON EL BACKEND DE SPRING
     RouterModule.forRoot(routes)  //ROUTING
   ],
   providers: [ClienteService], // CLASES SERVICIO
