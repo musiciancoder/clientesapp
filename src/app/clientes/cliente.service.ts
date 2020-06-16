@@ -30,7 +30,14 @@ export class ClienteService {
 
   //PARA CREAR UN CLIENTE
   create(cliente:Cliente) : Observable<Cliente>{
-    return  this.http.post<Cliente>(this.urlEndPoint, cliente, {headers: this.httpHeaders})
+    return this.http.post<Cliente>(this.urlEndPoint, cliente, {headers: this.httpHeaders})
   }
+
+  getCliente(id): Observable<Cliente>{
+    console.log(typeof (this.http.get<Cliente>(`${this.urlEndPoint}/${id}`)));
+    return this.http.get<Cliente>(`${this.urlEndPoint}/${id}`);
+  }
+
+
 
 }
