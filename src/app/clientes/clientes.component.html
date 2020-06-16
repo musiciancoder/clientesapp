@@ -9,7 +9,7 @@ Clientes
       <button class="btn btn-rounded btn-primary" type="button" [routerLink]="['/clientes/form']" >Crear cliente</button>
     </div>
 
-    <table class="table table-bordered table-stripped">
+    <table class="table table-bordered table-stripped text-center">
       <thead>
       <tr>
         <th>Id</th>
@@ -31,6 +31,9 @@ Clientes
         <td>{{cliente.createAt}}</td>
         <td>
           <button class="btn btn-rounded btn-primary" type="button" [routerLink]="['/clientes/form', cliente.id]" >editar cliente</button>
+        </td>
+        <td>
+          <button class="btn btn-rounded btn-danger" type="button" name="eliminar" (click)="delete(cliente)" >eliminar cliente</button>
         </td>
       </tr>
 

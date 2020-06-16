@@ -22,7 +22,7 @@ export class FormComponent implements OnInit {
     this.cargarCliente();
   }
 
-  // Al apretar boton editar cliente en el listado de clientes
+  // Al apretar boton editar cliente en el listado de clientes. Se llama en ngOninit
   cargarCliente(): void {
     this.activatedRoute.params.subscribe(params => { //params en morado pasa los parametros de la ruta al tipo observable<Params>
         let id = params['id']; //primero busca los parametros en el frontend, igual se hace por subscripcion
