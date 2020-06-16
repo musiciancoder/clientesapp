@@ -22,10 +22,10 @@ export class FormComponent implements OnInit {
     this.cargarCliente();
   }
 
-  // Al apretar boton editar cliente
+  // Al apretar boton editar cliente en el listado de clientes
   cargarCliente(): void {
-    this.activatedRoute.params.subscribe(params => {
-        let id = params['id'];
+    this.activatedRoute.params.subscribe(params => { //params en morado pasa los parametros de la ruta al tipo observable<Params>
+        let id = params['id']; //primero busca los parametros en el frontend, igual se hace por subscripcion
         if (id) {
           this.clienteService.getCliente(id).subscribe( (cliente) => this.cliente = cliente);
         }
@@ -37,11 +37,22 @@ export class FormComponent implements OnInit {
   public create(): void {
     this.clienteService.create(this.cliente).subscribe( // Observable (lo que se envia)
       cliente => { //Observador (respuesta)
-        this.router.navigate(['/clientes']),
-          swal('Nuevo cliente', `Cliente ${cliente.nombre} creado con éxito`, 'success'); //swal es sweet alert
+        this.router.navigate(['/clientes']), //primera promesa
+          swal('Nuevo cliente', `Cliente ${cliente.nombre} creado con éxito`, 'success'); //swal es sweet alert //segunda promesa
       }
     );
 
   }
+
+  // Al apretar boton editar en el formulario de envio de cliente
+  update(): void {
+    this.clienteService.update(this.cliente)
+      .subscribe(cliente=>{
+        this.router.navigate(['/clientes']), //primera promesa
+          swal('Cliente Actualizado', `Cliente ${cliente.nombre} actualizado con éxito`, 'success');
+
+      })
+  }
+
 
 }

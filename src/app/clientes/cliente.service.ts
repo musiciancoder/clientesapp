@@ -33,11 +33,15 @@ export class ClienteService {
     return this.http.post<Cliente>(this.urlEndPoint, cliente, {headers: this.httpHeaders})
   }
 
+  //PARA OBTENER UN CLIENTE POR ID
   getCliente(id): Observable<Cliente>{
     console.log(typeof (this.http.get<Cliente>(`${this.urlEndPoint}/${id}`)));
     return this.http.get<Cliente>(`${this.urlEndPoint}/${id}`);
   }
 
-
+  //PARA ACTUALIZAR UN CLIENTE
+  update(cliente: Cliente): Observable<Cliente>{
+    return this.http.put<Cliente>(`${this.urlEndPoint}/${cliente.id}`, cliente, {headers: this.httpHeaders});
+  }
 
 }
