@@ -32,7 +32,13 @@ export class ClienteService {
 
   //PARA CREAR UN CLIENTE
   create(cliente:Cliente) : Observable<Cliente>{
-    return this.http.post<Cliente>(this.urlEndPoint, cliente, {headers: this.httpHeaders})
+    return this.http.post<Cliente>(this.urlEndPoint, cliente, {headers: this.httpHeaders}).pipe(
+      catchError(e=>{
+        console.error(e.error.mensaje);
+        swal(e.error.mensaje,e.error.error,'error');
+        return throwError(e);
+      })
+    );
   }
 
   //PARA OBTENER UN CLIENTE POR ID
@@ -50,11 +56,23 @@ export class ClienteService {
 
   //PARA ACTUALIZAR UN CLIENTE
   update(cliente: Cliente): Observable<Cliente>{
-    return this.http.put<Cliente>(`${this.urlEndPoint}/${cliente.id}`, cliente, {headers: this.httpHeaders});
+    return this.http.put<Cliente>(`${this.urlEndPoint}/${cliente.id}`, cliente, {headers: this.httpHeaders}).pipe(
+      catchError(e=>{
+        console.error(e.error.mensaje);
+        swal(e.error.mensaje,e.error.error,'error');
+        return throwError(e);
+      })
+    );
   }
 
   //PARA BORRAR CLIENTE
   delete(id:number): Observable<Cliente> {
-    return this.http.delete<Cliente>(`${this.urlEndPoint}/${id}`, {headers: this.httpHeaders});
+    return this.http.delete<Cliente>(`${this.urlEndPoint}/${id}`, {headers: this.httpHeaders}).pipe(
+      catchError(e=>{
+        console.error(e.error.mensaje);
+        swal(e.error.mensaje,e.error.error,'error');
+        return throwError(e);
+      })
+    );
   }
 }
