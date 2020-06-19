@@ -31,11 +31,19 @@ export class ClienteService {
   }
 
   //PARA CREAR UN CLIENTE
+
+  /*PRIMERA FORMA (video 62 de manejo de errores frontend)
+  create(cliente:Cliente) : Observable<any>{ //con any podemos recibir tanto json como cliente, con <Cliente> podemos recibir solo del tipo Cliente */
+
+  /*SEGUNDA FORMA*/
   create(cliente:Cliente) : Observable<Cliente>{
-    return this.http.post<Cliente>(this.urlEndPoint, cliente, {headers: this.httpHeaders}).pipe(
+    return this.http.post(this.urlEndPoint, cliente, {headers: this.httpHeaders}).pipe(
+   map( (response:any) => response.cliente as Cliente), // response es el json que recibimos del backend, que en nuestro caso trae el mensaje y el cliente. Con esta linea pasamos el texto response.cliente al tipo Cliente
       catchError(e=>{
         console.error(e.error.mensaje);
-        swal(e.error.mensaje,e.error.error,'error');
+        console.error(e.error.error);
+        //alert(`Hay un error: ${e.error.error}`)
+       // swal('Error al crear', e.error.mensaje, 'error');
         return throwError(e);
       })
     );
@@ -55,8 +63,8 @@ export class ClienteService {
   }
 
   //PARA ACTUALIZAR UN CLIENTE
-  update(cliente: Cliente): Observable<Cliente>{
-    return this.http.put<Cliente>(`${this.urlEndPoint}/${cliente.id}`, cliente, {headers: this.httpHeaders}).pipe(
+  update(cliente: Cliente): Observable<any>{
+    return this.http.put<any>(`${this.urlEndPoint}/${cliente.id}`, cliente, {headers: this.httpHeaders}).pipe(
       catchError(e=>{
         console.error(e.error.mensaje);
         swal(e.error.mensaje,e.error.error,'error');
