@@ -40,6 +40,11 @@ export class ClienteService {
     return this.http.post(this.urlEndPoint, cliente, {headers: this.httpHeaders}).pipe(
    map( (response:any) => response.cliente as Cliente), // response es el json que recibimos del backend, que en nuestro caso trae el mensaje y el cliente. Con esta linea pasamos el texto response.cliente al tipo Cliente
       catchError(e=>{
+
+        if (e.status==400){
+          return throwError(e);
+        }
+
         console.error(e.error.mensaje);
         console.error(e.error.error);
         //alert(`Hay un error: ${e.error.error}`)
@@ -66,6 +71,11 @@ export class ClienteService {
   update(cliente: Cliente): Observable<any>{
     return this.http.put<any>(`${this.urlEndPoint}/${cliente.id}`, cliente, {headers: this.httpHeaders}).pipe(
       catchError(e=>{
+
+        if (e.status==400){
+          return throwError(e);
+        }
+
         console.error(e.error.mensaje);
         swal(e.error.mensaje,e.error.error,'error');
         return throwError(e);

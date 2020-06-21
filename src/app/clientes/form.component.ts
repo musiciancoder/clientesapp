@@ -13,6 +13,8 @@ export class FormComponent implements OnInit {
   public cliente: Cliente = new Cliente(); //a este atributo es donde se mapean los ngModel de los input
   public titulo: string = ' Crear cliente';
 
+  public errores:string[];
+
   constructor(private clienteService: ClienteService,
               private router: Router,
               private activatedRoute: ActivatedRoute) {
@@ -42,6 +44,11 @@ export class FormComponent implements OnInit {
       cliente => { //Observador (respuesta)
         this.router.navigate(['/clientes']), //primera promesa
           swal('Nuevo cliente', `El cliente ${cliente.nombre} ha sido creado con exito`, 'success'); //swal es sweet alert //segunda promesa
+      },
+      err=> {
+        this.errores = err.error.errors as string[]; //desde el backend
+        console.error('Código del error desde el backend: ' + err.status);
+        console.error(err.error.errors);
       }
     );
 
@@ -53,7 +60,14 @@ export class FormComponent implements OnInit {
       .subscribe(json=>{ //para escribir completo el json (el mensaje mas el cliente). En el metodo de la clase de servicio debemos cambiar el tipo <Cliente> por <any>
         this.router.navigate(['/clientes']), //primera promesa
           swal('Cliente Actualizado', `${json.mensaje}:${json.cliente.nombre}`, 'success');
-      })
+      },
+        err=> {
+          this.errores = err.error.errors as string[]; //desde el backend
+          console.error('Código del error desde el backend: ' + err.status);
+          console.error(err.error.errors);
+        }
+
+      )
   }
 
 
