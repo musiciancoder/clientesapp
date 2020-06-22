@@ -23,46 +23,42 @@ export class ClienteService {
   //El observable siempre es algun objeto del cliente. Existen Observadores, que son elementos del backend que se suscriben a este observable, para que
   //cuando cambie algo en algun observador(backend) se vea reflejado en el observable(frontend)
 
-  //PARA OBTENER LA LISTA DE CLIENTES
-  getClientes(): Observable<Cliente[]> {
+  //PARA OBTENER LA LISTA DE CLIENTES PAGINADA
+  getClientes(page:number ): Observable<any> {
     //return of(CLIENTES); //con el metodo 'of' se pasa el array de objetos a un observable (tambien llamado sujeto observable), que en este caso seria el array Cliente[]
-    return this.http.get(this.urlEndPoint).pipe(
-      tap(response => {
-        let clientes = response as Cliente[]; //al no retornar mas abajo, no cambia el tipo (sin embargo esto permite verlo en la consola)
-       console.log("ClienteService:tap1: ")
-        clientes.forEach(cliente => {
+    return this.http.get(this.urlEndPoint + '/page/' + page).pipe(
+
+      tap((response:any) => { //con esto le indicamos que la respuesta es un json
+       console.log("ClienteService:tap1: ");
+        (response.content as Cliente[]).forEach(cliente => { //convertimos el content del JSON a Cliente[]. Content aparece al agregar paginacion
           console.log(cliente.nombre);
         });
       }),
 
-      map(response => {
-
-          let clientes = response as Cliente[]; //pasa la respuesta a un arreglo de clientes
-
-          return clientes.map(cliente => { //al retornar cambia el tipo de la respuesta a Cliente []
+      map((response:any) => {
+        (response.content as Cliente[]).map(cliente => {
             cliente.nombre = cliente.nombre.toUpperCase();
 
-            let datePipe = new DatePipe('es'); //en español
+            //let datePipe = new DatePipe('es'); //en español
             //cliente.createAt=datePipe.transform(cliente.createAt, 'EEEE dd, MMMM-yyyy');
-            return cliente;
+            return cliente; //al retornar cambia el tipo de la respuesta a Cliente []
           });
 
-        }
-      ),
+            return response; //aca  cambia a tipo any
+        }),
 
       tap(response => {
        //al no retornar mas abajo, no cambia el tipo (sin embargo esto permite verlo en la consola)
-        console.log("ClienteService:tap2: ")
-        response.forEach(cliente => {
+        console.log("ClienteService:tap2: ");
+        (response.content as Cliente[]).forEach(cliente => {
           console.log(cliente.nombre);
         });
       }),
     );
-    //Primera forma de obtener un observable
-    /* return this.http.get(this.urlEndPoint).pipe(   //Segunda forma de obtener un observable
-     map ((response) => response as Cliente[] ) //la respuesta la obtengo como un listado de clientes
-   );*/
+
   }
+
+
 
   //PARA CREAR UN CLIENTE
 
