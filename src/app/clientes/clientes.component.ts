@@ -14,6 +14,7 @@ import {ActivatedRoute} from '@angular/router';
 export class ClientesComponent implements OnInit {
 
   clientes: Cliente[]; //El array que importamos lo definimos como atributo de clase
+  paginador: any;
 
   constructor(private clienteService: ClienteService, //Esta es inyeccion por dependencia por constructor. ver explicacion en Typescript.txt
               private activatedRoute: ActivatedRoute) {
@@ -37,9 +38,11 @@ export class ClientesComponent implements OnInit {
               console.log(cliente.nombre);
             });
           })
-        ).subscribe(response => this.clientes = response.content as Cliente[]);// this.clienteService.getClientes() es la ejecucion de inyeccion por dependencias
-        //con el metodo subscribe subscribimos el observable this.clienteService.getClientes() a un observador que se pasa como argumento
-        // ¿Por qué necesitaste decir que el array Cliente[] es parte de la clase con this.clientes = CLIENTES;? Acaso si no lo especificas en el método no lo reconoce al inicializar la app?
+        ).subscribe(response => {
+          this.clientes = response.content as Cliente[];
+          this.paginador = response; //aca paso tod el json
+
+        });
       }
     );
   }
