@@ -11,6 +11,11 @@ import { RouterModule, Routes} from '@angular/router';
 import {HttpClientModule} from '@angular/common/http';
 import { FormComponent } from './clientes/form.component';
 import {FormsModule} from '@angular/forms';
+import {registerLocaleData} from '@angular/common';
+import  localeES from '@angular/common/locales/es';
+
+
+registerLocaleData(localeES, 'es'); //fecha en español
 
 // ROUTING
 const  routes: Routes = [
