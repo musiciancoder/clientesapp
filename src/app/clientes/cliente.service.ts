@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import {formatDate, DatePipe} from '@angular/common';
 import {CLIENTES} from './clientes.json'; //EL ARRAY
 import { Cliente} from './cliente';
 import { of, Observable, throwError } from 'rxjs';
@@ -22,15 +23,18 @@ export class ClienteService {
   //cuando cambie algo en algun observador(backend) se vea reflejado en el observable(frontend)
 
   //PARA OBTENER LA LISTA DE CLIENTES
-  getClientes() {
+  getClientes() : Observable <Cliente[]> {
     //return of(CLIENTES); //con el metodo 'of' se pasa el array de objetos a un observable (tambien llamado sujeto observable), que en este caso seria el array Cliente[]
     return this.http.get(this.urlEndPoint).pipe(
       map(response=> {
 
         let clientes = response as Cliente[]; //pasa la respuesta a un arreglo de clientes
 
-        return clientes.map(cliente =>{
+        return  clientes.map(cliente =>{
           cliente.nombre = cliente.nombre.toUpperCase();
+          let datePipe = new DatePipe('en-US');
+          cliente.createAt=datePipe.transform(cliente.createAt, 'dd-MM-yyyy');
+          return cliente;
         });
 
       }
