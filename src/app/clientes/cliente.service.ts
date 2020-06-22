@@ -22,9 +22,21 @@ export class ClienteService {
   //cuando cambie algo en algun observador(backend) se vea reflejado en el observable(frontend)
 
   //PARA OBTENER LA LISTA DE CLIENTES
-  getClientes(): Observable<Cliente[]> {
+  getClientes() {
     //return of(CLIENTES); //con el metodo 'of' se pasa el array de objetos a un observable (tambien llamado sujeto observable), que en este caso seria el array Cliente[]
-    return this.http.get<Cliente[]>(this.urlEndPoint); //Primera forma de obtener un observable
+    return this.http.get(this.urlEndPoint).pipe(
+      map(response=> {
+
+        let clientes = response as Cliente[]; //pasa la respuesta a un arreglo de clientes
+
+        return clientes.map(cliente =>{
+          cliente.nombre = cliente.nombre.toUpperCase();
+        });
+
+      }
+      )
+    );
+  //Primera forma de obtener un observable
    /* return this.http.get(this.urlEndPoint).pipe(   //Segunda forma de obtener un observable
     map ((response) => response as Cliente[] ) //la respuesta la obtengo como un listado de clientes
   );*/
