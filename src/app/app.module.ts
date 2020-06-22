@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import {HeaderComponent} from './header/header.component';
@@ -42,7 +42,8 @@ const  routes: Routes = [
     FormsModule, // para trabajar con formularios
     RouterModule.forRoot(routes)  //ROUTING
   ],
-  providers: [ClienteService], // CLASES SERVICIO
+  providers: [ClienteService, // CLASES SERVICIO
+{provide: LOCALE_ID, useValue: 'es'}], //para pasar a formato fecha en español en los html
   bootstrap: [AppComponent]
 })
 export class AppModule { }
