@@ -123,4 +123,21 @@ export class ClienteService {
       })
     );
   }
+
+  //SUBIR IMAGEN
+  subirFoto(archivo: File, id):Observable<Cliente>{
+    let formData = new FormData(); //clase nativa de JavaScript
+    formData.append("archivo", archivo);
+    formData.append("id", id);
+    return this.http.post(`${this.urlEndPoint}/upload/`, formData).pipe(
+      map((response:any)=>response.Cliente as Cliente), //convertimos el JSON al tipo Cliente
+      catchError(e => {
+        console.error(e.error.mensaje);
+        swal(e.error.mensaje, e.error.error, 'error');
+        return throwError(e);
+      })
+
+    );
+
+  }
 }
