@@ -129,7 +129,7 @@ export class ClienteService {
     let formData = new FormData(); //clase nativa de JavaScript
     formData.append("archivo", archivo);
     formData.append("id", id);
-    return this.http.post(`${this.urlEndPoint}/upload/`, formData).pipe(
+    return this.http.post(`${this.urlEndPoint}/upload`, formData).pipe(
       map((response:any)=>response.Cliente as Cliente), //convertimos el JSON al tipo Cliente
       catchError(e => {
         console.error(e.error.mensaje);
