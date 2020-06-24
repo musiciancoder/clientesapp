@@ -28,6 +28,8 @@ Clientes
 
       <tbody>
       <tr *ngFor="let cliente of clientes">
+<!--        Boton para ver detalles-->
+        <td><button class="btn btn-rounded btn-primary" type="button" [routerLink]="['/clientes/ver', cliente.id]" >{{ cliente.id }}</button></td>
         <td>{{ cliente.id }}</td>
         <td>{{cliente.nombre}}</td>
         <td>{{cliente.apellido}}</td>
