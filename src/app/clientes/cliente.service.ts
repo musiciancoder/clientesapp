@@ -4,7 +4,7 @@ import localeES from '@angular/common/locales/es';
 import {CLIENTES} from './clientes.json'; //EL ARRAY
 import {Cliente} from './cliente';
 import {of, Observable, throwError} from 'rxjs';
-import {HttpClient, HttpHeaders,} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpRequest, HttpEvent} from '@angular/common/http';
 import {map, catchError, tap} from 'rxjs/operators';
 import swal from 'sweetalert2';
 import {Router} from '@angular/router';
@@ -124,20 +124,16 @@ export class ClienteService {
     );
   }
 
-  //SUBIR IMAGEN
-  subirFoto(archivo: File, id):Observable<Cliente>{
+  //SUBIR IMAGEN (en video 100 cambia el tipo de llamada de http a httpRequest
+  subirFoto(archivo: File, id):Observable<HttpEvent<{}>>{
     let formData = new FormData(); //clase nativa de JavaScript
     formData.append("archivo", archivo);
     formData.append("id", id);
-    return this.http.post(`${this.urlEndPoint}/upload`, formData).pipe(
-      map((response:any)=>response.Cliente as Cliente), //convertimos el JSON al tipo Cliente
-      catchError(e => {
-        console.error(e.error.mensaje);
-        swal(e.error.mensaje, e.error.error, 'error');
-        return throwError(e);
-      })
 
-    );
+    const req = new HttpRequest('POST',`${this.urlEndPoint}/upload`, formData, {
+        reportProgress: true});  //barra de progreso
+        return this.http.request(req);
+
 
   }
 }
