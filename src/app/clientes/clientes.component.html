@@ -1,14 +1,14 @@
-<detalle-cliente *ngIf="clienteSeleccionado"  [cliente]="clienteSeleccionado"></detalle-cliente>
+<detalle-cliente *ngIf="clienteSeleccionado" [cliente]="clienteSeleccionado"></detalle-cliente>
 
 <div class="card border-primary mb-3">
   <div class="card-header">
-Clientes
+    Clientes
   </div>
   <div class="card-body text-primary">
     <h5 class="card-title">Listado de clientes</h5>
 
     <div>
-      <button class="btn btn-rounded btn-primary" type="button" [routerLink]="['/clientes/form']" >Crear cliente</button>
+      <button class="btn btn-rounded btn-primary" type="button" [routerLink]="['/clientes/form']">Crear cliente</button>
     </div>
 
     <div *ngIf="clientes?.length === 0" class="alert alert-info">
@@ -30,25 +30,38 @@ Clientes
 
       <tbody>
       <tr *ngFor="let cliente of clientes">
-<!--        Boton para ver detalles-->
-        <td><button class="btn btn-rounded btn-primary"  type="button" (click)="abrirModeal(cliente)"   class=" btn btn-success btn-sm" >{{ cliente.id }}</button></td>
+        <td>
+          <img (click)="abrirModeal(cliente)" *ngIf="cliente?.foto"
+               src="http://localhost:8080/api/uploads/img/{{cliente.foto}}"
+               alt="{{cliente.foto}}" class="img-thumbnail rounded" style="width: 64px; cursor: pointer;">
+
+          <img (click)="abrirModeal(cliente)" *ngIf="!cliente?.foto"
+               src="http://localhost:8080/images/anonimo.png"
+               alt="{{cliente.foto}}" class="img-thumbnail rounded" style="width: 64px; cursor: pointer;">
+
+
+        </td>
         <td>{{ cliente.id }}</td>
         <td>{{cliente.nombre}}</td>
         <td>{{cliente.apellido}}</td>
         <td>{{cliente.email}}</td>
         <td>{{cliente.createAt | date: "EEEE dd, MMMM-yyyy"}}</td>
         <td>
-          <button class="btn btn-rounded btn-primary" type="button" [routerLink]="['/clientes/form', cliente.id]" >editar cliente</button>
+          <button class="btn btn-rounded btn-primary" type="button" [routerLink]="['/clientes/form', cliente.id]">editar
+            cliente
+          </button>
         </td>
         <td>
-          <button class="btn btn-rounded btn-danger" type="button" name="eliminar" (click)="delete(cliente)" >eliminar cliente</button>
+          <button class="btn btn-rounded btn-danger" type="button" name="eliminar" (click)="delete(cliente)">eliminar
+            cliente
+          </button>
         </td>
       </tr>
 
       </tbody>
 
     </table>
-<!--    INYECC DE DEPENDENCIAS DESDE paginator.component.ts-->
+    <!--    INYECC DE DEPENDENCIAS DESDE paginator.component.ts-->
     <paginator-nav *ngIf="paginador" [paginador]=" paginador"></paginator-nav>
 
   </div>
