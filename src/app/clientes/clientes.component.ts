@@ -15,6 +15,7 @@ export class ClientesComponent implements OnInit {
 
   clientes: Cliente[]; //El array que importamos lo definimos como atributo de clase
   paginador: any;
+  clienteSeleccionado: Cliente;
 
   constructor(private clienteService: ClienteService, //Esta es inyeccion por dependencia por constructor. ver explicacion en Typescript.txt
               private activatedRoute: ActivatedRoute) {
@@ -59,5 +60,8 @@ export class ClientesComponent implements OnInit {
     );
   }
 
-
+  //al hacer click al seleccionar un cliente
+abrirModeal(cliente: Cliente){
+    this.clienteSeleccionado = cliente    ;   //clienteSeleccionado llamado en el en selector detalle-cliente anidado en clientes.component.html
+}
 }

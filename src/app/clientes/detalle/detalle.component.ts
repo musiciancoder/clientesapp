@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, Input} from '@angular/core';
 import {Cliente} from '../cliente';
 import {ClienteService} from '../cliente.service';
 import {ActivatedRoute} from '@angular/router';
@@ -13,7 +13,7 @@ import {HttpEventType} from '@angular/common/http';
 //CLASE PARA SUBIR ARCHIVOS
 export class DetalleComponent implements OnInit {
 
-  cliente: Cliente;
+  @Input() cliente: Cliente;//aca obtiene cliente desde clientes.component, ya que detalle.component esta anidado en clientes.component.html
   titulo: string = 'Detalle del cliente';
   private fotoSeleccionada: File;
   progreso: number =0;
@@ -23,6 +23,7 @@ export class DetalleComponent implements OnInit {
   }
 
   ngOnInit() {
+   /* //ESTE CODIGO COMENTADO LO ELIMINO EN VIDEO 101, YA QUE OBTUVO EL CLIENTE NO DE PARAMETROS SINO CON @Input
     this.activatedRoute.paramMap.subscribe(params => {
       let id: number = +params.get('id');
       if (id) {
@@ -32,7 +33,7 @@ export class DetalleComponent implements OnInit {
 
         });
       }
-    });
+    });*/
   }
 
   seleccionarFoto(event) {
