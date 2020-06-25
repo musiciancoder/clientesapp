@@ -1,7 +1,8 @@
 import {Component, OnInit, Input} from '@angular/core';
 import {Cliente} from '../cliente';
 import {ClienteService} from '../cliente.service';
-import {ActivatedRoute} from '@angular/router';
+import {ModalService} from './modal.service';
+
 import {HttpEventType} from '@angular/common/http';
 
 @Component({
@@ -18,7 +19,8 @@ export class DetalleComponent implements OnInit {
   private fotoSeleccionada: File;
   progreso: number =0;
 
-  constructor(private clienteService: ClienteService, private activatedRoute: ActivatedRoute) {
+  constructor(private clienteService: ClienteService,
+              private modalService: ModalService) {
 
   }
 
@@ -65,6 +67,12 @@ export class DetalleComponent implements OnInit {
 
         });
     }
+  }
+
+  cerrarModal(){
+    this.modalService.cerrarModal();
+    this.fotoSeleccionada =null;
+    this.progreso =0;
   }
 
 }

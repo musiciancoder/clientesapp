@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Cliente} from './cliente';
 import {ClienteService} from './cliente.service';
+import {ModalService} from './detalle/modal.service';
 import swal from 'sweetalert2';
 import {tap} from 'rxjs/operators';
 import {ActivatedRoute} from '@angular/router';
@@ -18,7 +19,8 @@ export class ClientesComponent implements OnInit {
   clienteSeleccionado: Cliente;
 
   constructor(private clienteService: ClienteService, //Esta es inyeccion por dependencia por constructor. ver explicacion en Typescript.txt
-              private activatedRoute: ActivatedRoute) {
+              private activatedRoute: ActivatedRoute,
+              private modalService: ModalService ) {
   }
 
 
@@ -63,5 +65,7 @@ export class ClientesComponent implements OnInit {
   //al hacer click al seleccionar un cliente
 abrirModeal(cliente: Cliente){
     this.clienteSeleccionado = cliente    ;   //clienteSeleccionado llamado en el en selector detalle-cliente anidado en clientes.component.html
-}
+    this.modalService.abrirModal();
+
+  }
 }
