@@ -1,4 +1,5 @@
-<div *ngIf="modalService.modal" class="modal" tabindex="-1" role="dialog"style="display: block" > <!--si modal es true, aparece este div-->
+<div class="abrir-modal animacion fadeIn " *ngIf="modalService.modal" > <!--fadeIn definido en detalle.component.css para q se oscurezca la pantalla de a poco-->
+  <div class="modal" tabindex="-1" role="dialog"style="display: block" > <!--si modal es true, aparece este div-->
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
@@ -61,5 +62,5 @@
 
 
 
-
+</div>
 
