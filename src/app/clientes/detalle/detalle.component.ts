@@ -60,6 +60,7 @@ export class DetalleComponent implements OnInit {
           } else if(event.type===HttpEventType.Response){
             let response:any = event.body;
             this.cliente = response.cliente as Cliente; //con esto podemos obtener el cliente
+            this.modalService.notificarUpload.emit(this.cliente); //emit manda this.cliente al componente padre cliente.component.ts
             //swal('La foto se ha subido correctamente', `La foto se ha subido con éxito: ${this.cliente.foto}`, 'success'  );
           }
 

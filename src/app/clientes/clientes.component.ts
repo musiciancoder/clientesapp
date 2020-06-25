@@ -48,6 +48,18 @@ export class ClientesComponent implements OnInit {
         });
       }
     );
+
+    this.modalService.notificarUpload.subscribe(cliente=>{ //cliente este es el cliente que llega de emit desde detalle.component.ts
+      this.clientes = this.clientes.map(clienteOriginal=>{ //clienteOriginal son los clientes que ya estaban en la lista
+        if(cliente.id == clienteOriginal.id) {
+          clienteOriginal.foto = cliente.foto;
+        }
+        return clienteOriginal;
+        });
+      });
+
+
+
   }
 
   //Al presionar boton rojo eliminar
