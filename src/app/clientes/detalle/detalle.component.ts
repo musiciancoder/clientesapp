@@ -20,7 +20,7 @@ export class DetalleComponent implements OnInit {
   progreso: number =0;
 
   constructor(private clienteService: ClienteService,
-              private modalService: ModalService) {
+              public modalService: ModalService) {
 
   }
 
