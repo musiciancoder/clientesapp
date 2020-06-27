@@ -46,6 +46,7 @@ export class FormComponent implements OnInit {
 
   //Al apretar el boton de enviar el formulario para crear un cliente
   public create(): void {//sintaxis usando map en metodo create de la clase de servicio
+    console.log(this.cliente);
     this.clienteService.create(this.cliente).subscribe( // Observable (lo que se envia)
       cliente => { //Observador (respuesta)
         this.router.navigate(['/clientes']), //primera promesa
@@ -62,6 +63,7 @@ export class FormComponent implements OnInit {
 
   // Al apretar boton editar en el formulario de envio de cliente
   update(): void {  //sintaxis USANDO <any> en metodo update de la clase de servicio
+    console.log(this.cliente);
     this.clienteService.update(this.cliente)
       .subscribe(json => { //para escribir completo el json (el mensaje mas el cliente). En el metodo de la clase de servicio debemos cambiar el tipo <Cliente> por <any>
           this.router.navigate(['/clientes']), //primera promesa
@@ -75,5 +77,8 @@ export class FormComponent implements OnInit {
       );
   }
 
+  compararRegion(o1:Region, o2:Region): boolean{ // o1 y o2 son objetos
+    return o1 ===null || o2 ===null || o1 ===undefined || o2 ===undefined? false: o1.id===o2.id;
+  }
 
 }
