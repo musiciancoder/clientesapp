@@ -65,6 +65,7 @@
         <div class="col-sm-6">
 <!--          [compareWith]="compararRegion" es para que en la casilla se quede el objeto que hemos seleccionado-->
           <select [compareWith]="compararRegion" class="form-control" [(ngModel)]="cliente.region" name="region" style=" width: 500px">
+         <option [ngValue]="undefined">--seleccionar una región--</option>
           <option *ngFor="let region of regiones" [ngValue]="region">{{region.nombre}}</option>
           </select>
         </div>
