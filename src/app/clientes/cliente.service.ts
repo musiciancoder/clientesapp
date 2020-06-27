@@ -1,13 +1,14 @@
 import {Injectable} from '@angular/core';
 import {formatDate, DatePipe} from '@angular/common';
 import localeES from '@angular/common/locales/es';
-import {CLIENTES} from './clientes.json'; //EL ARRAY
+//import {CLIENTES} from './clientes.json'; //EL ARRAY
 import {Cliente} from './cliente';
 import {of, Observable, throwError} from 'rxjs';
 import {HttpClient, HttpHeaders, HttpRequest, HttpEvent} from '@angular/common/http';
 import {map, catchError, tap} from 'rxjs/operators';
 import swal from 'sweetalert2';
 import {Router} from '@angular/router';
+import {Region} from './region';
 
 @Injectable()
 export class ClienteService {
@@ -18,6 +19,12 @@ export class ClienteService {
 
   constructor(private http: HttpClient, private router: Router) { //INYECCION DE DEPENDENCIAS, CON ESTO http: HttpClient queda definida como atributo de la clase
 
+  }
+
+
+  //Para obtener una lista de regiones
+  getRegiones(): Observable<Region[]>{
+   return this.http.get<Region[]>(this.urlEndPoint + '/regiones');
   }
 
   //El observable siempre es algun objeto del cliente. Existen Observadores, que son elementos del backend que se suscriben a este observable, para que

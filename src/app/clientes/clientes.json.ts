@@ -1,4 +1,4 @@
-import {Cliente} from './cliente';
+/*import {Cliente} from './cliente';
 
 export const CLIENTES: Cliente[] = [
   {id: 1,nombre:'Andres', apellido:'Guzman' , email:'profesor@bolsa', createAt: '2017-12-11', foto:null},
@@ -13,4 +13,4 @@ export const CLIENTES: Cliente[] = [
   {id: 10,nombre:'Ruben', apellido:'Martinez' , email:'ruben@gmail', createAt: '2017-12-21', foto:null},
   {id: 11,nombre:'Hugo', apellido:'Rubio' , email:'pajaro@gmail', createAt: '2017-12-21', foto:null},
 
-];
+];*/

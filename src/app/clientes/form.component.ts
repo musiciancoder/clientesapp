@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Cliente} from './cliente';
+import {Region} from './region';
 import {ClienteService} from './cliente.service';
 import {Router, ActivatedRoute} from '@angular/router';
 import swal from 'sweetalert2';
@@ -11,9 +12,10 @@ import swal from 'sweetalert2';
 export class FormComponent implements OnInit {
 
   public cliente: Cliente = new Cliente(); //a este atributo es donde se mapean los ngModel de los input
+  public regiones: Region[];
   public titulo: string = ' Crear cliente';
 
-  public errores:string[];
+  public errores: string[];
 
   constructor(private clienteService: ClienteService,
               private router: Router,
@@ -29,10 +31,14 @@ export class FormComponent implements OnInit {
     this.activatedRoute.params.subscribe(params => { //params en morado pasa los parametros de la ruta al tipo observable<Params>
         let id = params['id']; //primero busca los parametros en el frontend, igual se hace por subscripcion
         if (id) {
-          this.clienteService.getCliente(id).subscribe( (cliente) => this.cliente = cliente);
+          this.clienteService.getCliente(id).subscribe((cliente) => this.cliente = cliente);
+
         }
       }
     );
+
+    this.clienteService.getRegiones().subscribe(regiones => this.regiones = regiones);
+
   }
 
   // NOTA: CREATE Y UPDATE TIENEN DIFERENTES SINTAXIS POR LO EXPLICADO AL FINAL DEL VIDEO 62.
@@ -45,7 +51,7 @@ export class FormComponent implements OnInit {
         this.router.navigate(['/clientes']), //primera promesa
           swal('Nuevo cliente', `El cliente ${cliente.nombre} ha sido creado con exito`, 'success'); //swal es sweet alert //segunda promesa
       },
-      err=> {
+      err => {
         this.errores = err.error.errors as string[]; //desde el backend
         console.error('Código del error desde el backend: ' + err.status);
         console.error(err.error.errors);
@@ -57,17 +63,16 @@ export class FormComponent implements OnInit {
   // Al apretar boton editar en el formulario de envio de cliente
   update(): void {  //sintaxis USANDO <any> en metodo update de la clase de servicio
     this.clienteService.update(this.cliente)
-      .subscribe(json=>{ //para escribir completo el json (el mensaje mas el cliente). En el metodo de la clase de servicio debemos cambiar el tipo <Cliente> por <any>
-        this.router.navigate(['/clientes']), //primera promesa
-          swal('Cliente Actualizado', `${json.mensaje}:${json.cliente.nombre}`, 'success');
-      },
-        err=> {
+      .subscribe(json => { //para escribir completo el json (el mensaje mas el cliente). En el metodo de la clase de servicio debemos cambiar el tipo <Cliente> por <any>
+          this.router.navigate(['/clientes']), //primera promesa
+            swal('Cliente Actualizado', `${json.mensaje}:${json.cliente.nombre}`, 'success');
+        },
+        err => {
           this.errores = err.error.errors as string[]; //desde el backend
           console.error('Código del error desde el backend: ' + err.status);
           console.error(err.error.errors);
         }
-
-      )
+      );
   }
 
 
