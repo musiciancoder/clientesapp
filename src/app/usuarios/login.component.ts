@@ -32,11 +32,14 @@ export class LoginComponent implements OnInit {
     }
     this.authService.login(this.usuario).subscribe(response => {
       console.log(response);//JSON
-      let payload = JSON.parse(atob(response.access_token.split(".")[1])); //atob pasa de encriptado base 64 a string, con split podemos separar las secciones del token (header, payload y firma). con JSON.parse lo pasamos a JSON
-      console.log(payload);
+
+
+      this.authService.guardarUsuario(response.access_token);
+      this.authService.guardarToken(response.access_token);
+      let usuario = this.authService.usuario;
       this.router.navigate(['/clientes']);
-      swal('Login',`Hola ${payload.user_name}, has iniciado sesión con éxito` )
-      //alert(`Hola ${payload.user_name}`);
+      swal('Login',`Hola ${usuario.username}, has iniciado sesión con éxito` )
+      //alert(`Hola ${usuario.username}`);
 
     });
   }
