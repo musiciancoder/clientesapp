@@ -63,7 +63,7 @@ export class AuthService {
     this._usuario.email = payload.email;
     this._usuario.username= payload.username;
     this._usuario.roles= payload.roles;
-    sessionStorage.setItem('usuario', JSON.stringify(this._usuario) );   //convierte un  json a string
+    sessionStorage.setItem('usuario', JSON.stringify(this._usuario) );   //convierte el objeto usuario a string
 
   }
 
@@ -75,7 +75,7 @@ export class AuthService {
 
   obtenerDatosToken(accessToken:string):any{
         if(accessToken !=null){
-          return JSON.parse(atob(accessToken.split(".")[1]));//lo pasa de string a JSON
+          return JSON.parse(atob(accessToken.split(".")[1]));//lo pasa de JSON string a objeto Javascript
         }
 
         return null;
