@@ -69,7 +69,7 @@ export class AuthService {
 
   guardarToken(accessToken:string):void{
       this._token = accessToken;
-      sessionStorage.setItem('usuario', accessToken); //el token ya es un string
+      sessionStorage.setItem('token', accessToken); //el token ya es un string
 
   }
 
@@ -77,9 +77,16 @@ export class AuthService {
         if(accessToken !=null){
           return JSON.parse(atob(accessToken.split(".")[1]));//lo pasa de JSON string a objeto Javascript
         }
-
         return null;
+  }
 
+  //Chequear en el componente login si el usuario ya ha iniciado sesión
+  isAuthenticated():boolean{
+    let payload = this.obtenerDatosToken(this._token);
+    if (payload !=null && payload.user_name && payload.user_name.length>0){
+      return true;
+    }
+    return false;
   }
 
 }

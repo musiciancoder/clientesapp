@@ -20,6 +20,11 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (this.authService.isAuthenticated()){ //si usuario esta autenticado
+      swal('Login', `Hola ${this.authService.usuario.username}, ya estas autenticado`);
+      this.router.navigate(['/clientes']);
+    }
+
   }
 
   login(): void {
@@ -50,6 +55,7 @@ export class LoginComponent implements OnInit {
 
       );
   }
+
 
 
 }
