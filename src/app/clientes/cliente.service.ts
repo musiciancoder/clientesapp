@@ -21,10 +21,24 @@ export class ClienteService {
 
   }
 
+  //PARA DEVOLVER AL LOGIN SI HAY ACCESO NO AUTORIZADO (401) O PROHIBIDO (403)
+  private isNoAutorizado(e): boolean{
+    if(e.status==401 || e.status==403){
+      this.router.navigate(['/login'])
+      return true;
+    }
+
+    return false;
+  }
 
   //Para obtener una lista de regiones
   getRegiones(): Observable<Region[]>{
-   return this.http.get<Region[]>(this.urlEndPoint + '/regiones');
+   return this.http.get<Region[]>(this.urlEndPoint + '/regiones').pipe(
+     catchError(e => {
+       this.isNoAutorizado(e);
+       return throwError(e);
+     })
+   );
   }
 
   //El observable siempre es algun objeto del cliente. Existen Observadores, que son elementos del backend que se suscriben a este observable, para que
@@ -78,6 +92,10 @@ export class ClienteService {
       map((response: any) => response.cliente as Cliente), // response es el json que recibimos del backend, que en nuestro caso trae el mensaje y el cliente. Con esta linea pasamos el texto response.cliente al tipo Cliente
       catchError(e => {
 
+        if(this.isNoAutorizado(e)){
+          return throwError(e);
+
+        }
         if (e.status == 400) {
           return throwError(e);
         }
@@ -96,6 +114,13 @@ export class ClienteService {
     //  console.log(typeof (this.http.get<Cliente>(`${this.urlEndPoint}/${id}`)));
     return this.http.get<Cliente>(`${this.urlEndPoint}/${id}`).pipe(
       catchError(e => {
+
+        if(this.isNoAutorizado(e)){
+          return throwError(e);
+
+        }
+
+
         this.router.navigate(['/clientes']);
         console.error(e.error.mensaje);
         swal('Error al editar', e.error.mensaje, 'error');
@@ -108,6 +133,11 @@ export class ClienteService {
   update(cliente: Cliente): Observable<any> {
     return this.http.put<any>(`${this.urlEndPoint}/${cliente.id}`, cliente, {headers: this.httpHeaders}).pipe(
       catchError(e => {
+
+        if(this.isNoAutorizado(e)){
+          return throwError(e);
+
+        }
 
         if (e.status == 400) {
           return throwError(e);
@@ -124,6 +154,11 @@ export class ClienteService {
   delete(id: number): Observable<Cliente> {
     return this.http.delete<Cliente>(`${this.urlEndPoint}/${id}`, {headers: this.httpHeaders}).pipe(
       catchError(e => {
+
+        if(this.isNoAutorizado(e)){
+          return throwError(e);
+
+        }
         console.error(e.error.mensaje);
         swal(e.error.mensaje, e.error.error, 'error');
         return throwError(e);
@@ -139,8 +174,12 @@ export class ClienteService {
 
     const req = new HttpRequest('POST',`${this.urlEndPoint}/upload`, formData, {
         reportProgress: true});  //barra de progreso
-        return this.http.request(req);
-
+        return this.http.request(req).pipe(
+          catchError(e => {
+            this.isNoAutorizado(e);
+            return throwError(e);
+          })
+        );
 
   }
 }
