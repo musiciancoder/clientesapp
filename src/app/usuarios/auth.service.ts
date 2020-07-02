@@ -61,7 +61,7 @@ export class AuthService {
     this._usuario.nombre = payload.nombre;
     this._usuario.apellido = payload.apellido;
     this._usuario.email = payload.email;
-    this._usuario.username= payload.username;
+    this._usuario.username= payload.user_name;
     this._usuario.roles= payload.roles;
     sessionStorage.setItem('usuario', JSON.stringify(this._usuario) );   //convierte el objeto usuario a string
 
